@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div class="container-lg main-container">
+      <nav class="navbar white navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+          <h3 class="nav-brand">Habr News</h3>
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <button type="button" class="btn btn-outline-light">Все новости</button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="suggest_news.html">
+                    <button type="button" class="btn btn-outline-light">Предложить новость</button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <button type="button" class="btn btn-outline-light">Контакты</button>
+                </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="row mt-3">
+        <div class="column col-9">
+            {% block content %}
+            {% endblock %}
+        </div>
+
+        <div class="column col-3">
+          <div class="container bg-light tags">
+            <h4>Тэги</h4>
+              {% block tags %}
+              {% endblock %}
+          </div>
+        </div>
+      </div>
+      <div class="footer bg-dark white mt-3">
+          <div class="container"><h6>Подпишись на нас в <a href="#" class="white">Телеграм</a></h6></div>
+      </div>
+    </div>
+</body>

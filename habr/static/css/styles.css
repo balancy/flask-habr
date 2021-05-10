@@ -1,0 +1,47 @@
+.main-container {
+    text-align: justify;
+}
+
+.post {
+    margin: 12px 0 36px;
+}
+
+.oswald {
+    font-family: Oswald;
+}
+
+.without-decoration {
+    text-decoration: none;
+}
+
+a {
+    color: #003366;
+}
+
+a:hover {
+    color: tomato;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.navbar {
+    width: 100%;
+}
+
+.white {
+    color: white;
+}
+
+.tags {
+    height: 100%;
+}
+
+.footer {
+    display: flex;
+    text-align: right;
+    align-items: center;
+    height: 50px;
+}
