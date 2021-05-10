@@ -46,9 +46,9 @@
 
         <div class="column col-3">
           <div class="container bg-light tags">
-            <h4>Тэги</h4>
+            <h3 class="mb-3">Теги</h3>
               {% for tag in tags %}
-                <p><span><a href="{{ url_for('habr_app.tag_posts', tag_id = tag.id)}}" class="oswald without-decoration">{{ tag.title }}</a></span></p>
+                <p><span><a href="{{ url_for('habr_app.tag_posts', tag_id=tag.id)}}" class="oswald without-decoration">{{ tag.title }}</a></span></p>
               {% endfor %}
           </div>
         </div>

@@ -48,9 +48,10 @@ def post_details(post_id):
     )
 
 
-@habr_app.route("/tag/<int:tag_id>/", endpoint="tag_posts")
+@habr_app.route("/tags/<int:tag_id>/", endpoint="tag_posts")
 def tag_posts(tag_id):
-    tags_and_posts = db.session.query(Tag, Post).filter_by(id=tag_id).join(Post, Tag.posts).order_by(desc(Post.published_at))
+    tags_and_posts = (db.session.query(Tag, Post).filter_by(id=tag_id).
+                      join(Post, Tag.posts).order_by(desc(Post.published_at)))
     all_tags = db.session.query(Tag).all()
 
     if not tags_and_posts:
@@ -62,6 +63,26 @@ def tag_posts(tag_id):
     return render_template(
         "tag_posts.html",
         tag=tag,
+        posts=posts,
+        tags=all_tags,
+    )
+
+
+@habr_app.route("/users/<int:user_id>/", endpoint="user_posts")
+def tag_posts(user_id):
+    user_and_posts = (db.session.query(User, Post).filter_by(id=user_id).
+                      join(Post, User.posts).order_by(desc(Post.published_at)))
+    all_tags = db.session.query(Tag).all()
+
+    if not user_and_posts:
+        return render_template("not_found.html", tags=all_tags)
+
+    user = user_and_posts.first()[0]
+    posts = [record[1] for record in user_and_posts]
+
+    return render_template(
+        "user_posts.html",
+        user=user,
         posts=posts,
         tags=all_tags,
     )

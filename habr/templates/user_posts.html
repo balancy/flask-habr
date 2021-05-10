@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Все новости
+    Посты автора '{{ user.title }}'
 {% endblock %}
 
 {% block content %}
+    <h2 class="oswald">Посты автора {{ user.title }}</h2>
+
     {% for post in posts %}
           <div class="post">
             <h2 class="oswald"><a href="{{ url_for('habr_app.details', post_id=post.id) }}" class="without-decoration">{{ post.title }}</a></h2>
@@ -27,4 +29,6 @@
             </div>
           </div>
     {% endfor %}
+
+    <a href="{{ url_for('habr_app.posts') }}" class="btn btn-outline-dark mt-3">← Вернуться на главную</a>
 {% endblock %}
