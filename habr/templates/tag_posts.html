@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Все новости
+    Посты по тегу '{{ tag.title }}'
 {% endblock %}
 
 {% block content %}
+    <h2 class="oswald">Посты по тегу {{ tag.title }}</h2>
+
     {% for post in posts %}
           <div class="post">
             <h2 class="oswald"><a href="{{ url_for('habr_app.details', post_id=post.id) }}" class="without-decoration">{{ post.title }}</a></h2>
             <div>
                 {% for tag in post.tags %}
-                    <span><a href="{{ url_for('habr_app.tag_posts', tag_id = tag.id)}}" class="oswald without-decoration">
+                    <span><a href="#" class="oswald without-decoration">
                         {{ tag.title }}{% if tag != post.tags[-1] %}, {% endif %}
                     </a></span>
                 {% endfor %}
@@ -27,4 +29,6 @@
             </div>
           </div>
     {% endfor %}
+
+    <a href="{{ url_for('habr_app.posts') }}" class="btn btn-outline-dark mt-3">← Вернуться обратно</a>
 {% endblock %}

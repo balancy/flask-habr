@@ -1,5 +1,5 @@
 from flask import Blueprint, request, render_template, url_for, redirect
-from sqlalchemy import func
+from sqlalchemy import func, desc, asc
 from sqlalchemy.orm import lazyload
 from werkzeug.exceptions import NotFound, BadRequest, InternalServerError
 from sqlalchemy.exc import IntegrityError
@@ -14,7 +14,7 @@ habr_app = Blueprint("habr_app", __name__, url_prefix="/")
 @habr_app.route("/", endpoint="posts")
 def posts_list():
     posts = db.session.query(Post).order_by(Post.published_at.desc())
-    tags = db.session.query(Tag).all()
+    all_tags = db.session.query(Tag).all()
 
     # new_tags = (db.session.query(Tag, func.count(posts.c.post_id).label("posts_count")).
     #             join(posts).group_by(Post).order_by("posts_count DESC"))
@@ -23,7 +23,7 @@ def posts_list():
     return render_template(
         "posts_list.html",
         posts=posts,
-        tags=tags,
+        tags=all_tags,
     )
 
 
@@ -33,18 +33,37 @@ def refresh_posts():
     return redirect(url_for("habr_app.posts"))
 
 
-@habr_app.route("/<int:post_id>/", endpoint="details")
+@habr_app.route("/posts/<int:post_id>/", endpoint="details")
 def post_details(post_id):
     post = db.session.query(Post).filter_by(id=post_id).first()
-    tags = db.session.query(Tag).all()
+    all_tags = db.session.query(Tag).all()
 
     if not post:
-        return render_template("not_found.html", tags=tags)
+        return render_template("not_found.html", tags=all_tags)
 
     return render_template(
         "post_details.html",
         post=post,
-        tags=tags,
+        tags=all_tags,
+    )
+
+
+@habr_app.route("/tag/<int:tag_id>/", endpoint="tag_posts")
+def tag_posts(tag_id):
+    tags_and_posts = db.session.query(Tag, Post).filter_by(id=tag_id).join(Post, Tag.posts).order_by(desc(Post.published_at))
+    all_tags = db.session.query(Tag).all()
+
+    if not tags_and_posts:
+        return render_template("not_found.html", tags=all_tags)
+
+    tag = tags_and_posts.first()[0]
+    posts = [record[1] for record in tags_and_posts]
+
+    return render_template(
+        "tag_posts.html",
+        tag=tag,
+        posts=posts,
+        tags=all_tags,
     )
 
 
