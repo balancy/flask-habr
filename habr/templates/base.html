@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -48,7 +48,7 @@
           <div class="container bg-light tags">
             <h4>Тэги</h4>
               {% for tag in tags %}
-                <p><span><a href="#" class="oswald without-decoration">{{ tag.title }}</a></span></p>
+                <p><span><a href="{{ url_for('habr_app.tag_posts', tag_id = tag.id)}}" class="oswald without-decoration">{{ tag.title }}</a></span></p>
               {% endfor %}
           </div>
         </div>
