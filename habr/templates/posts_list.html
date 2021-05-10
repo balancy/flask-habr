@@ -7,7 +7,7 @@
 {% block content %}
     {% for post in posts %}
           <div class="post">
-            <h2 class="oswald"><a href="#" class="without-decoration">{{ post.title }}</a></h2>
+            <h2 class="oswald"><a href="{{ url_for('habr_app.details', post_id=post.id) }}" class="without-decoration">{{ post.title }}</a></h2>
             <div>
                 {% for tag in post.tags %}
                     <span><a href="#" class="oswald without-decoration">
@@ -23,14 +23,8 @@
                 {% endif %}
                 {{ post.description }}
                 <br>
-                <a href="#" class="btn btn-outline-dark mt-3">Читать дальше →</a>
+                <a href="{{ url_for('habr_app.details', post_id=post.id) }}" class="btn btn-outline-dark mt-3">Читать дальше →</a>
             </div>
           </div>
-    {% endfor %}
-{% endblock %}
-
-{% block tags %}
-    {% for tag in tags %}
-        <p><span><a href="#" class="oswald without-decoration">{{ tag.title }}</a></span></p>
     {% endfor %}
 {% endblock %}

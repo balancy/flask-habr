@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Страница не найдена
+{% endblock %}
+
+{% block content %}
+    <h2 class="oswald">Страница не найдена</h2>
+    <a href="{{ url_for('habr_app.posts') }}" class="btn btn-outline-dark mt-3">← Вернуться обратно</a>
+{% endblock %}

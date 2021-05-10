@@ -17,10 +17,10 @@
     <div class="container-lg main-container">
       <nav class="navbar white navbar-expand-md navbar-dark bg-dark">
         <div class="container-fluid">
-          <h3 class="nav-brand">Habr News</h3>
+          <h3><a href="{{ url_for('habr_app.posts')}}" class="nav-brand without-decoration white">Habr News</a></h3>
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="{{ url_for('habr_app.posts')}}">
                     <button type="button" class="btn btn-outline-light">Все новости</button>
                 </a>
             </li>
@@ -47,8 +47,9 @@
         <div class="column col-3">
           <div class="container bg-light tags">
             <h4>Тэги</h4>
-              {% block tags %}
-              {% endblock %}
+              {% for tag in tags %}
+                <p><span><a href="#" class="oswald without-decoration">{{ tag.title }}</a></span></p>
+              {% endfor %}
           </div>
         </div>
       </div>

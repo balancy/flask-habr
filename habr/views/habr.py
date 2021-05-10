@@ -1,4 +1,6 @@
 from flask import Blueprint, request, render_template, url_for, redirect
+from sqlalchemy import func
+from sqlalchemy.orm import lazyload
 from werkzeug.exceptions import NotFound, BadRequest, InternalServerError
 from sqlalchemy.exc import IntegrityError
 
@@ -11,8 +13,13 @@ habr_app = Blueprint("habr_app", __name__, url_prefix="/")
 
 @habr_app.route("/", endpoint="posts")
 def posts_list():
-    posts = Post.query.all()
-    tags = Tag.query.all()
+    posts = db.session.query(Post).order_by(Post.published_at.desc())
+    tags = db.session.query(Tag).all()
+
+    # new_tags = (db.session.query(Tag, func.count(posts.c.post_id).label("posts_count")).
+    #             join(posts).group_by(Post).order_by("posts_count DESC"))
+    # new_tags = db.session.query(Tag, Tag.posts_number).order_by(Tag.posts_number.desc())
+
     return render_template(
         "posts_list.html",
         posts=posts,
@@ -25,7 +32,26 @@ def refresh_posts():
     fill_db_with_data()
     return redirect(url_for("habr_app.posts"))
 
-#
+
+@habr_app.route("/<int:post_id>/", endpoint="details")
+def post_details(post_id):
+    post = db.session.query(Post).filter_by(id=post_id).first()
+    tags = db.session.query(Tag).all()
+
+    if not post:
+        return render_template("not_found.html", tags=tags)
+
+    return render_template(
+        "post_details.html",
+        post=post,
+        tags=tags,
+    )
+
+
+@habr_app.app_errorhandler(404)
+def page_not_found(e):
+    return render_template("not_found.html")
+
 # @habr_app.route("/add/", methods=["GET", "POST"], endpoint="add")
 # def add_product():
 #     if request.method == "GET":

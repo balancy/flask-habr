@@ -9,6 +9,7 @@ from sqlalchemy import (
     String,
     Text,
 )
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 
 from habr.models.database import db
@@ -99,6 +100,10 @@ class Tag(db.Model):
     posts = relationship(
         "Post", secondary="post_tag_links", back_populates="tags",
     )
+
+    @hybrid_property
+    def posts_number(self):
+        return self.posts.count()
 
     def __str__(self):
         return f"{self.__class__.__name__} <{self.title}>"

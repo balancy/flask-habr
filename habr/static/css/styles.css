@@ -31,6 +31,15 @@ img {
     width: 100%;
 }
 
+.nav-brand {
+    margin: auto 18px auto 6px;
+}
+
+iframe {
+    width: 100%;
+    height: 600px;
+}
+
 .white {
     color: white;
 }
