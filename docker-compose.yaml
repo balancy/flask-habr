@@ -2,11 +2,11 @@ version: '3'
 
 services:
   db:
-    container_name: postgres_db
+    container_name: habr_db
     image: postgres
     volumes:
       - ./db-data/pg-data:/var/lib/postgresql/data/ # persist data even if container shuts down
     env_file:
-      - postgres.env
+      - .env
     ports:
       - 5432:5432

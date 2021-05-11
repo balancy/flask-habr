@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Посты автора '{{ user.title }}'
+    Посты автора {{ user.username }}
 {% endblock %}
 
 {% block content %}
-    <h2 class="oswald">Посты автора {{ user.title }}</h2>
+    <h2 class="oswald">Посты автора {{ user.username }}</h2>
 
     {% for post in posts %}
           <div class="post">
