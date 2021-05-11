@@ -7,6 +7,7 @@ from posts import config
 from posts.forms import LoginForm
 from posts.models import Tag, User
 from posts.models.database import db
+from posts.utils import get_popular_tags
 from posts.views.habr import habr_app
 
 app = Flask(__name__)
@@ -33,14 +34,14 @@ def login():
         return redirect(url_for('habr_app.posts'))
 
     title = "Авторизация"
-    all_tags = db.session.query(Tag).all()
+    popular_tags = get_popular_tags()
     login_form = LoginForm()
 
     if request.method == 'GET':
         return render_template(
             'login.html',
             title=title,
-            tags=all_tags,
+            tags=popular_tags,
             form=login_form,
             current_user=current_user,
         )

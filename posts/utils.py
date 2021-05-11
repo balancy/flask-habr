@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import InternalServerError
 
@@ -109,3 +110,11 @@ def fill_db_with_data():
         for tag in post["tags"]:
             tag_id = create_or_get_tag(tag)
             create_or_get_post_tag_link(post_id, tag_id)
+
+
+def get_popular_tags():
+    popular_tags = db.session.query(
+        Tag.id, Tag.title, db.func.count(Post.id).label("posts_count")
+    ).join(Post.tags).group_by(Tag.id).order_by(desc("posts_count"))
+
+    return popular_tags[:10]

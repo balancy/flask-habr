@@ -73,9 +73,12 @@
 
         <div class="column col-3">
           <div class="container bg-light tags">
-            <h3 class="mb-3">Теги</h3>
+            <h3 class="mb-3">Популярные теги</h3>
               {% for tag in tags %}
-                <p><span><a href="{{ url_for('habr_app.tag_posts', tag_id=tag.id)}}" class="oswald without-decoration">{{ tag.title }}</a></span></p>
+                <p>
+                    <a href="{{ url_for('habr_app.tag_posts', tag_id=tag[0])}}" class="oswald without-decoration">{{ tag[1] }}</a>
+                    <span class="oswald without-decoration">({{ tag[2] }} статьи)</span>
+                </p>
               {% endfor %}
           </div>
         </div>
