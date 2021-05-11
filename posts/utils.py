@@ -3,8 +3,8 @@ import requests
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import InternalServerError
 
-from habr.models.database import db
-from habr.models.habr_entities import Tag, Post, User, PostTagLink
+from posts.models.database import db
+from posts.models.habr_entities import Tag, Post, User, PostTagLink
 
 HABR_URL = "https://habr.com/ru/news/"
 

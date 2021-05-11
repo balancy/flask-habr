@@ -4,9 +4,9 @@ from sqlalchemy.orm import lazyload
 from werkzeug.exceptions import NotFound, BadRequest, InternalServerError
 from sqlalchemy.exc import IntegrityError
 
-from habr.models.database import db
-from habr.models.habr_entities import User, Tag, PostTagLink, Post
-from habr.utils import fill_db_with_data
+from posts.models.database import db
+from posts.models.habr_entities import User, Tag, PostTagLink, Post
+from posts.utils import fill_db_with_data
 
 habr_app = Blueprint("habr_app", __name__, url_prefix="/")
 
@@ -14,6 +14,7 @@ habr_app = Blueprint("habr_app", __name__, url_prefix="/")
 @habr_app.route("/", endpoint="posts")
 def posts_list():
     posts = db.session.query(Post).order_by(Post.published_at.desc())
+    title = "Все новости"
     all_tags = db.session.query(Tag).all()
 
     # new_tags = (db.session.query(Tag, func.count(posts.c.post_id).label("posts_count")).
@@ -22,6 +23,7 @@ def posts_list():
 
     return render_template(
         "posts_list.html",
+        title=title,
         posts=posts,
         tags=all_tags,
     )
@@ -43,6 +45,7 @@ def post_details(post_id):
 
     return render_template(
         "post_details.html",
+        title=post.title,
         post=post,
         tags=all_tags,
     )
@@ -63,6 +66,7 @@ def tag_posts(tag_id):
     return render_template(
         "tag_posts.html",
         tag=tag,
+        title=f"Посты по тегу { tag.title }",
         posts=posts,
         tags=all_tags,
     )
@@ -82,6 +86,7 @@ def tag_posts(user_id):
 
     return render_template(
         "user_posts.html",
+        title=f"Посты пользователя { user.username }",
         user=user,
         posts=posts,
         tags=all_tags,

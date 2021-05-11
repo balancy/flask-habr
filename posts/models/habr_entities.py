@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from flask_login import UserMixin
 from sqlalchemy import (
     Boolean,
     Column,
@@ -11,21 +13,12 @@ from sqlalchemy import (
 )
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
+from werkzeug.security import generate_password_hash, check_password_hash
 
-from habr.models.database import db
-#
-# class Product(db.Model):
-#     id = Column(Integer, primary_key=True)
-#     name = Column(String(80), unique=True, nullable=False, default="",
-#     server_default="")
-#     is_new = Column(Boolean, nullable=False, default=False,
-#     server_default="FALSE")
-#
-#     def __repr__(self):
-#         return '<%s %r>' % (self.__class__.__name__, self.username)
+from posts.models.database import db
 
 
-class User(db.Model):
+class User(db.Model, UserMixin):
     __tablename__ = "users"
 
     id = Column(Integer, primary_key=True)
@@ -36,18 +29,24 @@ class User(db.Model):
         default="",
         server_default="",
     )
+    password = Column(
+        String(128),
+        nullable=False,
+        default=generate_password_hash("generic_password"),
+        server_default=generate_password_hash("generic_password"),
+    )
     is_admin = Column(
         Boolean,
         nullable=False,
         default=False,
         server_default="0",
     )
-    created_at = Column(
-        DateTime,
-        nullable=False,
-        default=datetime.utcnow,
-        server_default=func.now()
-    )
+
+    def set_password(self, password):
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
     posts = relationship("Post", back_populates="user")
 

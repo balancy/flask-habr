@@ -22,9 +22,10 @@ class DevelopmentConfig(Config):
     username = os.getenv('POSTGRES_USER')
     password = os.getenv('POSTGRES_PASSWORD')
     db = os.getenv('POSTGRES_DB')
+    SECRET_KEY = os.urandom(32)
+
     SQLALCHEMY_DATABASE_URI = ('postgresql+psycopg2://'
                                f'{username}:{password}@localhost:5432/{db}')
-    print(SQLALCHEMY_DATABASE_URI)
 
 
 class TestingConfig(Config):

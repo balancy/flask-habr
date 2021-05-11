@@ -1,8 +1,8 @@
 """Initial migration
 
-Revision ID: 1b7d4b0db88e
+Revision ID: 9a7404af1131
 Revises: 
-Create Date: 2021-05-10 12:02:44.883115
+Create Date: 2021-05-11 13:38:23.542742
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '1b7d4b0db88e'
+revision = '9a7404af1131'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,8 +26,8 @@ def upgrade():
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=50), server_default='', nullable=False),
+    sa.Column('password', sa.String(length=128), server_default='pbkdf2:sha256:150000$WsREulxa$9ff8232d93705b39d41f12fa7ab3bf28262f40bb547d9a0394b0055469971e1b', nullable=False),
     sa.Column('is_admin', sa.Boolean(), server_default='0', nullable=False),
-    sa.Column('created_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('username'),
     sa.UniqueConstraint('username')
@@ -38,6 +38,7 @@ def upgrade():
     sa.Column('published_at', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
     sa.Column('description', sa.Text(), server_default='', nullable=True),
     sa.Column('text', sa.Text(), server_default='', nullable=True),
+    sa.Column('cover_image', sa.String(), server_default='', nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
