@@ -19,16 +19,35 @@
         <div class="container-fluid">
           <h3><a href="{{ url_for('habr_app.posts')}}" class="nav-brand without-decoration white">Habr News</a></h3>
           <ul class="navbar-nav ml-auto">
+            {% if not current_user.is_authenticated %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login')}}">
+                    <p class="mt-2">Войти</p>
+                </a>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <p class="mt-3 mr-3">Привет, {{ current_user.username }}</p>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout')}}">
+                    <p class="mt-2">Выйти</p>
+                </a>
+            </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('habr_app.posts')}}">
                     <button type="button" class="btn btn-outline-light">Все новости</button>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <button type="button" class="btn btn-outline-light">Предложить новость</button>
-                </a>
-            </li>
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <button type="button" class="btn btn-outline-light">Предложить новость</button>
+                    </a>
+                </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="#">
                     <button type="button" class="btn btn-outline-light">Контакты</button>

@@ -1,4 +1,6 @@
 import os
+from datetime import timedelta
+
 from dotenv import load_dotenv
 
 
@@ -23,6 +25,7 @@ class DevelopmentConfig(Config):
     password = os.getenv('POSTGRES_PASSWORD')
     db = os.getenv('POSTGRES_DB')
     SECRET_KEY = os.urandom(32)
+    REMEMBER_COOKIE_DURATION = timedelta(days=5)
 
     SQLALCHEMY_DATABASE_URI = ('postgresql+psycopg2://'
                                f'{username}:{password}@localhost:5432/{db}')

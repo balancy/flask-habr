@@ -38,13 +38,17 @@ def login():
 
     if request.method == 'GET':
         return render_template(
-            'login.html', title=title, tags=all_tags, form=login_form,
+            'login.html',
+            title=title,
+            tags=all_tags,
+            form=login_form,
+            current_user=current_user,
         )
 
     if login_form.validate_on_submit():
         user = User.query.filter_by(username=login_form.username.data).first()
         if user and user.check_password(login_form.password.data):
-            login_user(user)
+            login_user(user, remember=login_form.remember_me.data)
             flash('Вы успешно вошли в свою учетную запись')
             return redirect(url_for('habr_app.posts'))
 
