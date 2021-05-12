@@ -4,6 +4,9 @@ from wtforms.validators import EqualTo, DataRequired, Length
 
 
 class LoginForm(FlaskForm):
+    """Form used for login.
+    """
+
     username = StringField(
         'Имя пользователя', validators=[DataRequired()],
         render_kw={"class": "form-control mt-3"},
@@ -24,6 +27,9 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
+    """Form used for register.
+    """
+
     username = StringField(
         'Имя пользователя',
         validators=[

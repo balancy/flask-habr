@@ -30,14 +30,15 @@ def load_user(user_id):
 
 @app.route('/register', methods=['GET', 'POST'], endpoint='register')
 def register():
+    """View for register a new user.
+    """
+
     if current_user.is_authenticated:
         return redirect(url_for('habr_app.posts'))
 
     title = "Регистрация"
     popular_tags = get_popular_tags()
     register_form = RegisterForm()
-
-    # if request.method == 'GET':
 
     if register_form.validate_on_submit():
         user = User.query.filter_by(username=register_form.username.data).first()
@@ -68,6 +69,9 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'], endpoint='login')
 def login():
+    """View for login.
+    """
+
     if current_user.is_authenticated:
         return redirect(url_for('habr_app.posts'))
 
@@ -97,6 +101,9 @@ def login():
 
 @app.route('/logout', endpoint='logout')
 def logout():
+    """View for logout.
+    """
+
     if current_user.is_authenticated:
         logout_user()
         flash('Вы вышли из своей учетной записи')
