@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, url_for, redirect
-from flask_login import current_user
+from flask_login import current_user, login_required
 from sqlalchemy import desc
 
 from posts.models.database import db
@@ -23,6 +23,7 @@ def posts_list():
 
 
 @habr_app.route("/refresh", endpoint="refresh")
+@login_required
 def refresh_posts():
     fill_db_with_data()
     return redirect(url_for("habr_app.posts"))

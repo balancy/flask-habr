@@ -114,7 +114,7 @@ def fill_db_with_data():
 
 def get_popular_tags():
     popular_tags = db.session.query(
-        Tag.id, Tag.title, db.func.count(Post.id).label("posts_count")
-    ).join(Post.tags).group_by(Tag.id).order_by(desc("posts_count"))
+        Tag, db.func.count(Post.id).label("count"),
+    ).outerjoin(Post.tags).group_by(Tag.id).order_by(desc("count"))
 
     return popular_tags[:10]
