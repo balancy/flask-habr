@@ -13,15 +13,13 @@ class Config(object):
     load_dotenv()
     USERNAME = os.getenv('POSTGRES_USER')
     PASSWORD = os.getenv('POSTGRES_PASSWORD')
-    DB = os.getenv('POSTGRES_DB')
     HOST = os.getenv('POSTGRES_HOST')
-    PORT = os.getenv('POSTGRES_PORT')
     SECRET_KEY = os.urandom(32)
     REMEMBER_COOKIE_DURATION = timedelta(days=5)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SQLALCHEMY_DATABASE_URI = ('postgresql+psycopg2://'
-                               f'{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB}')
+                               f'{USERNAME}:{PASSWORD}@{HOST}:5432/habr_db')
 
 
 class ProductionConfig(Config):
