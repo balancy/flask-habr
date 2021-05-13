@@ -36,7 +36,7 @@ def register():
     if current_user.is_authenticated:
         return redirect(url_for('habr_app.posts'))
 
-    title = "Регистрация"
+    title = 'Регистрация'
     popular_tags = get_popular_tags()
     register_form = RegisterForm()
 
@@ -75,7 +75,7 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('habr_app.posts'))
 
-    title = "Авторизация"
+    title = 'Авторизация'
     popular_tags = get_popular_tags()
     login_form = LoginForm()
 

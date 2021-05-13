@@ -14,10 +14,11 @@ class Config(object):
     USERNAME = os.getenv('POSTGRES_USER')
     PASSWORD = os.getenv('POSTGRES_PASSWORD')
     DB = os.getenv('POSTGRES_DB')
-    HOST = os.getenv('HOST')
-    PORT = os.getenv('PORT')
+    HOST = os.getenv('POSTGRES_HOST')
+    PORT = os.getenv('POSTGRES_PORT')
     SECRET_KEY = os.urandom(32)
     REMEMBER_COOKIE_DURATION = timedelta(days=5)
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     SQLALCHEMY_DATABASE_URI = ('postgresql+psycopg2://'
                                f'{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DB}')
@@ -28,7 +29,6 @@ class ProductionConfig(Config):
     """
 
     DEBUG = False
-    pass
 
 
 class DevelopmentConfig(Config):
@@ -37,17 +37,6 @@ class DevelopmentConfig(Config):
 
     DEBUG = True
 
-    load_dotenv()
-    USERNAME = os.getenv('POSTGRES_USER')
-    PASSWORD = os.getenv('POSTGRES_PASSWORD')
-    DB = os.getenv('POSTGRES_DB')
-    SECRET_KEY = os.urandom(32)
-    REMEMBER_COOKIE_DURATION = timedelta(days=5)
-
-    SQLALCHEMY_DATABASE_URI = ('postgresql+psycopg2://'
-                               f'{USERNAME}:{PASSWORD}@localhost:5432/{DB}')
-
 
 class TestingConfig(Config):
     DEBUG = True
-    pass
