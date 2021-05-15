@@ -36,9 +36,14 @@ Docker should be already installed.
 docker-compose build 
 ```
 
-2. Run db and app by command:
+2. Run db by command:
 ```console
-docker-compose up -d
+docker-compose build db -d 
+```
+
+2. Run app by command:
+```console
+docker-compose up app -d
 ```
 
 App will be available via:
