@@ -29,7 +29,7 @@ git clone https://github.com/balancy/flask-habr
 
 ## Launch app in docker container
 
-Docker compose should be already installed.
+Docker should be already installed.
 
 1. Build db and app by command:
 ```console
