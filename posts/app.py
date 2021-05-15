@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request, render_template, flash, url_for
 from flask_login import LoginManager, login_user, logout_user, current_user
 from flask_migrate import Migrate
@@ -10,8 +12,12 @@ from posts.models.database import db
 from posts.utils import get_popular_tags
 from posts.views.habr import habr_app
 
+is_production = os.environ.get("FLASK_ENV", "") == "production"
+
 app = Flask(__name__)
-app.config.from_object(config.DevelopmentConfig)
+app.config.from_object(
+    config.ProductionConfig if is_production else config.DevelopmentConfig
+)
 
 db.init_app(app)
 migrate = Migrate(app, db)
