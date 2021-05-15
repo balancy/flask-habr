@@ -20,7 +20,7 @@ class Config(object):
 
     SQLALCHEMY_DATABASE_URI = os.getenv(
         'SQLALCHEMY_DATABASE_URI',
-        f'postgresql+psycopg2://{USERNAME}:{PASSWORD}@localhost:5432/{DB}')
+        f'postgresql+psycopg2://{USERNAME}:{PASSWORD}@0.0.0.0:5432/{DB}')
 
 
 class ProductionConfig(Config):
