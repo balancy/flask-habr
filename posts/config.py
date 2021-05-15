@@ -28,7 +28,6 @@ class ProductionConfig(Config):
     """
 
     DB_SERVER = '0.0.0.0'
-    DEBUG = False
 
 
 class DevelopmentConfig(Config):
