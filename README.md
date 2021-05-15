@@ -38,12 +38,12 @@ docker-compose build
 
 2. Run db by command:
 ```console
-docker-compose build db -d 
+docker compose up -d db 
 ```
 
 2. Run app by command:
 ```console
-docker-compose up app -d
+docker compose up -d app
 ```
 
 App will be available via:
