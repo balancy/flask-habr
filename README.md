@@ -21,60 +21,31 @@ Python3 and Git should be already installed.
 git clone https://github.com/balancy/flask-habr
 ```
 
-2. Go inside cloned repository and create virtual environment by command:
-```console
-python -m venv env
-```
-
-3. Activate virtual environment. For linux-based OS:
-```console
-source env/bin/activate
-```
-&nbsp;&nbsp;&nbsp;
-For Windows:
-```console
-env\scripts\activate
-```
-
-4. Install requirements by command:
-```console
-pip install -r requirements.txt
-```
-
-5. Rename `.env.example` to `.env` and define your proper values for environmental variables:
+2. Rename `.env.example` to `.env` and define your proper values for environmental variables:
 
 - `POSTGRES_USER` — postgres db user
 - `POSTGRES_PASSWORD` — postgres db password
-- `POSTGRES_HOST` — host where you run the app
+- `POSTGRES_DB` — postgres db name
 
-## Launch db
+## Launch app in docker container
 
-1. Run docker container with postgresql db
+Docker compose should be already installed.
+
+1. Build db and app by command:
 ```console
-docker-compose up -d 
+docker-compose build 
 ```
 
-2. Initialize db by command:
+2. Run db and app by command:
 ```console
-flask db init
+docker-compose up -d
 ```
 
-3. Upgrade db by command:
-```console
-flask db upgrade
+App will be available via:
 ```
-
-4. You can create an admin by command
-```console
-python3 create_admin.py
+host_name:5050
 ```
-
-## Launch app
-
-App is launched by command
-```console
-python3 wsgi.py
-```
+where `host_name` is the name of your host
 
 ## Populate DB
 
